@@ -212,21 +212,6 @@ export class SettingsComponent implements OnInit {
     async updateBiometric() {
         if (this.biometric && this.supportsBiometric) {
 
-            // Request permission to use the optional permission for nativeMessaging
-            if (!this.platformUtilsService.isFirefox()) {
-                const granted = await new Promise((resolve, reject) => {
-                    chrome.permissions.request({permissions: ['nativeMessaging']}, resolve);
-                });
-
-                if (!granted) {
-                    await this.platformUtilsService.showDialog(
-                        this.i18nService.t('nativeMessaginPermissionErrorDesc'), this.i18nService.t('nativeMessaginPermissionErrorTitle'),
-                        this.i18nService.t('ok'), null);
-                    this.biometric = false;
-                    return;
-                }
-            }
-
             const submitted = Swal.fire({
                 heightAuto: false,
                 buttonsStyling: false,
